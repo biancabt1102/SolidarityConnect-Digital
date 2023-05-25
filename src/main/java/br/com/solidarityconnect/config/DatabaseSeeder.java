@@ -1,11 +1,13 @@
 package br.com.solidarityconnect.config;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 
 import br.com.solidarityconnect.models.Alimento;
 import br.com.solidarityconnect.models.Doacao;
@@ -16,6 +18,8 @@ import br.com.solidarityconnect.repository.DoacaoRepository;
 import br.com.solidarityconnect.repository.EnderecoRepository;
 import br.com.solidarityconnect.repository.UsuarioRepository;
 
+
+@Configuration
 public class DatabaseSeeder implements CommandLineRunner{
     
     @Autowired
@@ -32,11 +36,11 @@ public class DatabaseSeeder implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        Usuario usuario1 = new Usuario(1L, "SuperFresh", "contato@superfresh.com", "senha123", "12345678901234", "(11) 98765-4321");
-        Usuario usuario2 = new Usuario(2L, "La Bella Pasta", "contato@labellapasta.com", "senha456", "98765432109876", "(21) 12345-6789");
-        Usuario usuario3 = new Usuario(3L, "Green Mart", "contato@greenmart.com", "senha789", "45678901234567", "(31) 55555-5555");
-        Usuario usuario4 = new Usuario(4L, "Sushi World", "contato@sushiworld.com", "senhaabc", "76543210987654", "(41) 98765-4321");
-        Usuario usuario5 = new Usuario(5L, "FreshMart", "contato@freshmart.com", "senhaxyz", "23456789012345", "(51) 12345-6789");
+        Usuario usuario1 = new Usuario(1L, "SuperFresh", "contato@superfresh.com", "senha123", "12.345.678/9012-34", "(11) 98765-4321");
+        Usuario usuario2 = new Usuario(2L, "La Bella Pasta", "contato@labellapasta.com", "senha456", "98.765.432/1098-76", "(21) 12345-6789");
+        Usuario usuario3 = new Usuario(3L, "Green Mart", "contato@greenmart.com", "senha789", "45.678.901/2345-67", "(31) 55555-5555");
+        Usuario usuario4 = new Usuario(4L, "Sushi World", "contato@sushiworld.com", "senhaabc", "76.543.210/9876-54", "(41) 98765-4321");
+        Usuario usuario5 = new Usuario(5L, "FreshMart", "contato@freshmart.com", "senhaxyz", "23.456.789/0123-45", "(51) 12345-6789");
         usuarioRepository.saveAll(List.of(usuario1, usuario2, usuario3, usuario4, usuario5));
 
         Alimento alimento1 = new Alimento(1L, "Maçãs", LocalDate.of(2023, 6, 1), 50, "Perecível");

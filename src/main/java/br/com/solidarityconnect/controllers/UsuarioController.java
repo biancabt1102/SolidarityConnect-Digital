@@ -9,6 +9,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.solidarityconnect.models.Credencial;
+import br.com.solidarityconnect.models.Token;
 import br.com.solidarityconnect.models.Usuario;
 import br.com.solidarityconnect.repository.UsuarioRepository;
+import br.com.solidarityconnect.service.TokenService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,10 +36,20 @@ import lombok.extern.slf4j.Slf4j;
 public class UsuarioController {
 
 	@Autowired
+    PasswordEncoder encoder;
+
+	@Autowired
 	UsuarioRepository usuarioRepository;
 
 	@Autowired
     PagedResourcesAssembler<Object> assembler;
+
+	@Autowired
+    TokenService tokenService;
+
+	@Autowired
+    AuthenticationManager manager;
+
 
 	@GetMapping
     public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) String busca, @PageableDefault(size = 5) Pageable pageable){        
@@ -54,14 +69,22 @@ public class UsuarioController {
 		return usuario.toEntityModel();
 	}
 
-	@PostMapping
+	@PostMapping("/cadastro")
 	public ResponseEntity<Object> create(@RequestBody @Valid Usuario usuario) {
 		log.info("Cadastrando Usuário" + usuario);
+		usuario.setSenha(encoder.encode(usuario.getSenha()));
 		usuarioRepository.save(usuario);
 		return ResponseEntity
             .created(usuario.toEntityModel().getRequiredLink("self").toUri())
             .body(usuario.toEntityModel());
 	}
+
+	@PostMapping("/login")
+    public ResponseEntity<Token> login(@RequestBody Credencial credencial){
+        manager.authenticate(credencial.toAuthentication());
+        var token = tokenService.generateToken(credencial);
+        return ResponseEntity.ok(token);
+    }
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<Object> delete(@PathVariable Long id) {

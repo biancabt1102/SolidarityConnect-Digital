@@ -16,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -44,8 +45,7 @@ public class Alimento {
     private LocalDate validadade;
 
     @NotNull
-    @NotBlank(message = "A quantidade é obrigatória")
-    @Size(min = 1)
+    @Min(1)
     @Column(name = "qtd_disponivel")
     private int quantidade;
 
