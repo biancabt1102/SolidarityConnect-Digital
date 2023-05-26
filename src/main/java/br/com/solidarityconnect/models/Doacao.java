@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class Doacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cd_doacao")
+    @Column(name = "cd_doacao", columnDefinition = "NUMBER(4)")
     private Long idDoacao;
     
     @NotNull
@@ -40,11 +40,11 @@ public class Doacao {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "cd_usuario")
+    @JoinColumn(name = "cd_usuario", columnDefinition = "NUMBER(4)")
     private Usuario usuario;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "cd_alimento")
+    @JoinColumn(name = "cd_alimento", columnDefinition = "NUMBER(4)")
     private Alimento alimento;
 }

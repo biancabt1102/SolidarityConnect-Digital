@@ -32,13 +32,13 @@ import lombok.NoArgsConstructor;
 public class Alimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cd_alimento")
+    @Column(name = "cd_alimento", columnDefinition = "NUMBER(4)")
     private Long idAlimento;
 
     @NotNull
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 30)
-    @Column(name = "nm_alimento")
+    @Column(name = "nm_alimento", columnDefinition = "VARCHAR2(30)")
     private String nomeAlimento;
 
     @Column(name = "dt_validade")
@@ -46,12 +46,12 @@ public class Alimento {
 
     @NotNull
     @Min(1)
-    @Column(name = "qtd_disponivel")
+    @Column(name = "qtd_disponivel", columnDefinition = "NUMBER(7)")
     private int quantidadeAlimento;
 
     @NotNull
     @NotBlank(message = "O tipo é obrigatória")
-    @Column(name = "tp_alimento")
+    @Column(name = "tp_alimento", columnDefinition = "VARCHAR2(30)")
     private String tipoAlimento;
 
     public EntityModel<Alimento> toEntityModel() {

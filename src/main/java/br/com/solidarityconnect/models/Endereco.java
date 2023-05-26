@@ -36,43 +36,43 @@ import lombok.NoArgsConstructor;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cd_endereco")
+    @Column(name = "cd_endereco", columnDefinition = "NUMBER(4)")
     private Long idEndereco;
 
     @NotNull
     @NotBlank(message = "O logradouro é obrigatório")
-    @Column(name = "nm_endereco")
+    @Column(name = "nm_endereco", columnDefinition = "VARCHAR2(50)")
     private String logradouroEndereco;
 
     @NotNull
     @Min(1)
-    @Column(name = "nr_endereco")
+    @Column(name = "nr_endereco", columnDefinition = "NUMBER(4)")
     private int numeroEndereco;
 
     @NotNull
     @NotBlank(message = "O CEP é obrigatório")
     @Pattern(regexp = "^\\d{5}-\\d{3}$")
-    @Column(name = "ds_cep")
+    @Column(name = "ds_cep", columnDefinition = "CHAR(9)")
     private String cepEndereco;
 
     @NotNull
     @NotBlank(message = "O bairro é obrigatório")
-    @Column(name = "nm_bairro")
+    @Column(name = "nm_bairro", columnDefinition = "VARCHAR2(50)")
     private String bairroEndereco;
 
     @NotNull
     @NotBlank(message = "O UF é obrigatório")
     @Pattern(regexp = "^[A-Z]{2}$")
-    @Column(name = "ds_uf")
+    @Column(name = "ds_uf", columnDefinition = "CHAR(2)")
     private String ufEndereco;
     
     @Nullable
     @Size(min = 2)
-    @Column(name = "ds_complemento")
+    @Column(name = "ds_complemento", columnDefinition = "VARCHAR2(20)")
     private String complementoEndereco;
     
     @ManyToOne
-    @JoinColumn(name = "cd_usuario")
+    @JoinColumn(name = "cd_usuario", columnDefinition = "NUMBER(4)")
     private Usuario usuario;
 
     public EntityModel<Endereco> toEntityModel() {
