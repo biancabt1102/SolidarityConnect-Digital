@@ -37,41 +37,40 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cd_endereco")
-    private Long id;
+    private Long idEndereco;
 
     @NotNull
     @NotBlank(message = "O logradouro é obrigatório")
     @Column(name = "nm_endereco")
-    private String logradouro;
+    private String logradouroEndereco;
 
     @NotNull
     @Min(1)
     @Column(name = "nr_endereco")
-    private int numero;
+    private int numeroEndereco;
 
     @NotNull
     @NotBlank(message = "O CEP é obrigatório")
     @Pattern(regexp = "^\\d{5}-\\d{3}$")
     @Column(name = "ds_cep")
-    private String cep;
+    private String cepEndereco;
 
     @NotNull
     @NotBlank(message = "O bairro é obrigatório")
     @Column(name = "nm_bairro")
-    private String bairro;
+    private String bairroEndereco;
 
     @NotNull
     @NotBlank(message = "O UF é obrigatório")
     @Pattern(regexp = "^[A-Z]{2}$")
     @Column(name = "ds_uf")
-    private String uf;
+    private String ufEndereco;
     
     @Nullable
     @Size(min = 2)
     @Column(name = "ds_complemento")
-    private String complemento;
+    private String complementoEndereco;
     
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "cd_usuario")
     private Usuario usuario;
@@ -79,11 +78,11 @@ public class Endereco {
     public EntityModel<Endereco> toEntityModel() {
         return EntityModel.of(
             this,
-            linkTo(methodOn(EnderecoController.class).show(id)).withSelfRel(),
-            linkTo(methodOn(EnderecoController.class).delete(id)).withRel("delete"),
+            linkTo(methodOn(EnderecoController.class).show(idEndereco)).withSelfRel(),
+            linkTo(methodOn(EnderecoController.class).delete(idEndereco)).withRel("delete"),
             linkTo(methodOn(EnderecoController.class).index(null, Pageable.unpaged())).withRel("all"),
 
-            linkTo(methodOn(UsuarioController.class).show(this.getUsuario().getId())).withRel("usuario")
+            linkTo(methodOn(UsuarioController.class).show(this.getUsuario().getIdUsuario())).withRel("usuario")
         );
     }
 }

@@ -36,43 +36,43 @@ public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cd_endereco")
-    private Long id;
+    private Long idUsuario;
 
     @NotNull
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 50)
     @Column(name = "nm_usuario")
-    private String nome;
+    private String nomeUsuario;
 
     @NotNull
     @NotBlank(message="O email é obrigatório")
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @Column(name = "ds_email")
-    private String email;
+    private String emailUsuario;
 
     @NotNull
     @NotBlank(message = "A senha é obrigatória")
     @Size(min = 8)
     @Column(name = "ds_senha")
-    private String senha;
+    private String senhaUsuario;
 
     @NotNull
     @NotBlank(message = "O cnpj é obrigatória")
     @Pattern(regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$")
     @Column(name = "ds_cpj")
-    private String cnpj;
+    private String cnpjUsuario;
     
     @NotNull
     @NotBlank(message = "O telefone é obrigatório")
     @Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?\\d{4,5}-\\d{4}$")
     @Column(name = "nr_telefone")
-    private String telefone;
+    private String telefoneUsuario;
 
     public EntityModel<Usuario> toEntityModel() {
         return EntityModel.of(
             this,
-            linkTo(methodOn(UsuarioController.class).show(id)).withSelfRel(),
-            linkTo(methodOn(UsuarioController.class).delete(id)).withRel("delete"),
+            linkTo(methodOn(UsuarioController.class).show(idUsuario)).withSelfRel(),
+            linkTo(methodOn(UsuarioController.class).delete(idUsuario)).withRel("delete"),
             linkTo(methodOn(UsuarioController.class).index(null, Pageable.unpaged())).withRel("all")
         );
     }
@@ -84,12 +84,12 @@ public class Usuario implements UserDetails{
 
     @Override
     public String getPassword() {
-        return senha;
+        return senhaUsuario;
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return emailUsuario;
     }
 
     @Override

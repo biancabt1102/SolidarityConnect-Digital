@@ -33,7 +33,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     var usuario = tokenService.validate(token);
 
                     // autenticar
-                    Authentication auth = new UsernamePasswordAuthenticationToken(usuario.getEmail(), null, usuario.getAuthorities() );
+                    Authentication auth = new UsernamePasswordAuthenticationToken(usuario.getEmailUsuario(), null, usuario.getAuthorities() );
                     SecurityContextHolder.getContext().setAuthentication(auth);
 
                 }

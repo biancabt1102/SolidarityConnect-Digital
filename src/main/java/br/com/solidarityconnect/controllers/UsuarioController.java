@@ -31,7 +31,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("api/usuarios")
+@RequestMapping("solidarityconnect/api/usuarios")
 @Slf4j
 public class UsuarioController {
 
@@ -57,7 +57,7 @@ public class UsuarioController {
 
 		Page<Usuario> usuarios = (busca == null) ?
             usuarioRepository.findAll(pageable):
-            usuarioRepository.findByNomeContaining(busca, pageable);
+            usuarioRepository.findByNomeUsuarioContaining(busca, pageable);
 
         return assembler.toModel(usuarios.map(Usuario::toEntityModel));
     }
@@ -72,7 +72,7 @@ public class UsuarioController {
 	@PostMapping("/cadastro")
 	public ResponseEntity<Object> create(@RequestBody @Valid Usuario usuario) {
 		log.info("Cadastrando Usuário" + usuario);
-		usuario.setSenha(encoder.encode(usuario.getSenha()));
+		usuario.setSenhaUsuario(encoder.encode(usuario.getSenhaUsuario()));
 		usuarioRepository.save(usuario);
 		return ResponseEntity
             .created(usuario.toEntityModel().getRequiredLink("self").toUri())
@@ -99,7 +99,7 @@ public class UsuarioController {
         log.info("Alterar Usuário " + id);
 		findByUsuario(id);
 
-		usuario.setId(id);
+		usuario.setIdUsuario(id);
 		usuarioRepository.save(usuario);
 		return usuario.toEntityModel();
 	}

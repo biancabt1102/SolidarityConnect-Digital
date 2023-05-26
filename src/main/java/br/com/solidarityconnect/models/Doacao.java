@@ -27,7 +27,7 @@ public class Doacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cd_doacao")
-    private Long id;
+    private Long idDoacao;
     
     @NotNull
     @Column(name = "dt_doacao")

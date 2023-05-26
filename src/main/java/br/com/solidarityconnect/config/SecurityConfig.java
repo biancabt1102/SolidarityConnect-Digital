@@ -23,8 +23,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .authorizeHttpRequests()
-                    .requestMatchers(HttpMethod.POST, "api/usuarios/cadastro").permitAll()
-                    .requestMatchers(HttpMethod.POST, "api/usuarios/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "solidarityconnect/api/usuarios/cadastro").permitAll()
+                    .requestMatchers(HttpMethod.POST, "solidarityconnect/api/usuarios/login").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

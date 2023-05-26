@@ -11,8 +11,9 @@ import br.com.solidarityconnect.models.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
-    Page<Usuario> findByNomeContaining(String busca, Pageable pageable);
+    Page<Usuario> findByNomeUsuarioContaining(String busca, Pageable pageable);
 
-    Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByEmailUsuario(String emailUsuario);
+
 
 }

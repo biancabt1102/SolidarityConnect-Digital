@@ -10,5 +10,5 @@ import br.com.solidarityconnect.models.Alimento;
 
 public interface AlimentoRepository extends JpaRepository<Alimento, Long> {
     
-    Page<Alimento> findByNomeContaining(String busca, Pageable pageable);
+    Page<Alimento> findByNomeAlimentoContaining(String busca, Pageable pageable);
 }

@@ -8,5 +8,5 @@ import br.com.solidarityconnect.models.Endereco;
 
 public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
     
-    Page<Endereco> findByLogradouroContaining(String busca, Pageable pageable);
+    Page<Endereco> findByLogradouroEnderecoContaining(String busca, Pageable pageable);
 }

@@ -33,32 +33,32 @@ public class Alimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cd_alimento")
-    private Long id;
+    private Long idAlimento;
 
     @NotNull
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 30)
     @Column(name = "nm_alimento")
-    private String nome;
+    private String nomeAlimento;
 
     @Column(name = "dt_validade")
-    private LocalDate validadade;
+    private LocalDate validadeAlimento;
 
     @NotNull
     @Min(1)
     @Column(name = "qtd_disponivel")
-    private int quantidade;
+    private int quantidadeAlimento;
 
     @NotNull
     @NotBlank(message = "O tipo é obrigatória")
     @Column(name = "tp_alimento")
-    private String tipo;
+    private String tipoAlimento;
 
     public EntityModel<Alimento> toEntityModel() {
         return EntityModel.of(
             this,
-            linkTo(methodOn(AlimentoController.class).show(id)).withSelfRel(),
-            linkTo(methodOn(AlimentoController.class).delete(id)).withRel("delete"),
+            linkTo(methodOn(AlimentoController.class).show(idAlimento)).withSelfRel(),
+            linkTo(methodOn(AlimentoController.class).delete(idAlimento)).withRel("delete"),
             linkTo(methodOn(AlimentoController.class).index(null, Pageable.unpaged())).withRel("all")
         );
     }
