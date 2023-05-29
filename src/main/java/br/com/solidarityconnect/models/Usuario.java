@@ -53,7 +53,7 @@ public class Usuario implements UserDetails{
     @NotNull
     @NotBlank(message = "A senha é obrigatória")
     @Size(min = 8)
-    @Column(name = "ds_senha", columnDefinition = "VARCHAR2(8)")
+    @Column(name = "ds_senha")
     private String senhaUsuario;
 
     @NotNull

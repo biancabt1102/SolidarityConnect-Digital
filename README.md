@@ -54,7 +54,7 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
 
 ```
 {
-    "id": 1,
+    "idAlimento": 1,
     "nomeAlimento": "Maçã",
     "validadeAlimento": "2023-06-01",
     "quantidadeAlimento": 10,
@@ -86,21 +86,21 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
 ```
 [
     {
-        "id": 1,
+        "idAlimento": 1,
         "nomeAlimento": "Maçã",
         "validadeAlimento": "2023-06-01",
         "quantidadeAlimento": 10,
         "tipoAlimento": "perecível"
     },
     {
-        "id": 2,
+        "idAlimento": 2,
         "nomeAlimento": "Filé Mignon",
         "validadeAlimento": "2023-06-15",
         "quantidadeAlimento": 5,
         "tipoAlimento": "perecível"
     },
     {
-        "id": 3,
+        "idAlimento": 3,
         "nomeAlimento": "Milho em conserva",
         "validadeAlimento": "2024-12-31",
         "quantidadeAlimento": 8,
