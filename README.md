@@ -180,15 +180,15 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
 | tipoAlimento       | texto   | O tipo do alimento                  |
 
 ```
-[
-    {
-        "idAlimento": 1,
-        "nomeAlimento": "Banana",
-        "validadeAlimento": "2023-05-30",
-        "quantidadeAlimento": 15,
-        "tipoAlimento": "perecível"
-    }
-]
+
+{
+    "idAlimento": 1,
+    "nomeAlimento": "Banana",
+    "validadeAlimento": "2023-05-30",
+    "quantidadeAlimento": 15,
+    "tipoAlimento": "perecível"
+}
+
 ```
 
 *Corpo da resposta*
@@ -241,7 +241,7 @@ Exemplo de requisição:
 
 ### Listar Endereços
 
-`GET` /solidarityconnect/api/alimento
+`GET` /solidarityconnect/api/endereco
 
 *Exemplo de resposta*
 
