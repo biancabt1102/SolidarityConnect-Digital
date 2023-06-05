@@ -7,6 +7,14 @@ O objetivo principal do aplicativo é facilitar e agilizar o processo de doaçã
 
 <br>
 
+## Vídeo pitch
+
+[Vídeo pitch aqui](https://www.youtube.com/watch?v=MboQHZNgQSI)
+
+<hr>
+
+<br>
+
 ## Procedimentos para instalação e execução da API
 
 Primeiro de tudo, você irá fazer o clone do projeto utilizando o `Git` já previamente instalado no seu computador/notebook, logo depois de ter o clone instalado você irá abrir o `Visual Studio Code` ir em "Arquivo" > "Abrir pasta..." e selecionar a pasta que está o seu projeto instalado. Após tudo isso e verificar se possue o `Java` em seu computador e as extensões necessárias no VS Code, você pode rodar o projeto no canto superior direito no símbolo de "Play" e clicar na seta ao lado do símbolo em "Run Java". Agora para rodar os testes JSONs que estam nesse README você vai utilizar o `Postman` ou `Insomnia`.
