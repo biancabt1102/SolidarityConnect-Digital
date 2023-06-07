@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                     .requestMatchers(HttpMethod.POST, "solidarityconnect/api/usuarios/cadastro").permitAll()
                     .requestMatchers(HttpMethod.POST, "solidarityconnect/api/usuarios/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "solidarityconnect/api/endereco").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

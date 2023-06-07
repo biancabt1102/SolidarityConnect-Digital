@@ -9,8 +9,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,12 +61,20 @@ public class EnderecoController {
 	@PostMapping
 	public ResponseEntity<Object> create(@RequestBody @Valid Endereco endereco) {
 		log.info("Cadastrando Endereço" + endereco);
-		endereco.setUsuario(encontrandoUsuario());
-		enderecoRepository.save(endereco);
-		return ResponseEntity
-            .created(endereco.toEntityModel().getRequiredLink("self").toUri())
-            .body(endereco.toEntityModel());
+
+		Usuario ultimoUsuario = usuarioRepository.findTopByOrderByIdUsuarioDesc();
+
+		if (ultimoUsuario != null) {
+			endereco.setUsuario(ultimoUsuario);
+			enderecoRepository.save(endereco);
+			return ResponseEntity
+				.created(endereco.toEntityModel().getRequiredLink("self").toUri())
+				.body(endereco.toEntityModel());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
+
 
 	
 	@DeleteMapping("{id}")
@@ -82,25 +88,16 @@ public class EnderecoController {
 	@PutMapping("{id}")
 	public EntityModel<Endereco> update(@PathVariable @Valid Long id, @RequestBody Endereco endereco) {
         log.info("Alterar Endereço " + id);
-		findByEndereco(id);
+		Endereco enderecoEncontrado = findByEndereco(id);
 		
 		endereco.setIdEndereco(id);
-		endereco.setUsuario(encontrandoUsuario());
+		endereco.setUsuario(enderecoEncontrado.getUsuario());
 		enderecoRepository.save(endereco);
 		return endereco.toEntityModel();
 	}
 	
 	private Endereco findByEndereco(Long id) {
 		return enderecoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrado"));
-	}
-
-	private Usuario encontrandoUsuario() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		var username = authentication.getName();
-	
-		Usuario usuario = usuarioRepository.findByEmailUsuario(username)
-		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-		return usuario;
 	}
 }
 

@@ -59,6 +59,9 @@ public class Alimento {
             this,
             linkTo(methodOn(AlimentoController.class).show(idAlimento)).withSelfRel(),
             linkTo(methodOn(AlimentoController.class).delete(idAlimento)).withRel("delete"),
+            linkTo(methodOn(AlimentoController.class).findByNome(nomeAlimento)).withRel("nome alimento"),
+            linkTo(methodOn(AlimentoController.class).findByTipoAlimento(tipoAlimento)).withRel("tipo alimento"),
+            linkTo(methodOn(AlimentoController.class).findByUsuarioId(idAlimento)).withRel("delete"),
             linkTo(methodOn(AlimentoController.class).index(null, Pageable.unpaged())).withRel("all")
         );
     }

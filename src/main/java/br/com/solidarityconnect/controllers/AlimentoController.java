@@ -1,6 +1,8 @@
 package br.com.solidarityconnect.controllers;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,6 +70,51 @@ public class AlimentoController {
 		return alimento.toEntityModel();
 	}
 
+	@GetMapping("/idusuario/{id}")
+	public List<EntityModel<Alimento>> findByUsuarioId(@PathVariable Long id) {
+		log.info("Buscar Alimentos por ID do Usuário " + id);
+
+		Usuario usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+
+		List<Doacao> doacoes = doacaoRepository.findByIdUsuario(usuario.getIdUsuario());
+		List<Alimento> alimentos = doacoes.stream()
+				.map(Doacao::getAlimento)
+				.collect(Collectors.toList());
+
+		return alimentos.stream()
+				.map(Alimento::toEntityModel)
+				.collect(Collectors.toList());
+	}
+
+
+	@GetMapping("/tipo")
+    public List<EntityModel<Alimento>> findByTipoAlimento(@RequestParam("tipo") String tipo) {
+        log.info("Buscar Alimentos por Tipo: {}", tipo);
+
+        List<Alimento> alimentos = alimentoRepository.findByTipoAlimento(tipo);
+
+        if (alimentos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum alimento encontrado com o tipo informado.");
+        }
+
+        return alimentos.stream()
+                .map(Alimento::toEntityModel)
+                .collect(Collectors.toList());
+    }
+
+	@GetMapping("/nome")
+	public List<EntityModel<Alimento>> findByNome(@RequestParam String nome) {
+		log.info("Buscar Alimentos por Nome: " + nome);
+
+		List<Alimento> alimentos = alimentoRepository.findByNomeAlimentoContaining(nome);
+
+		return alimentos.stream()
+				.map(Alimento::toEntityModel)
+				.collect(Collectors.toList());
+	}
+
+
 	@PostMapping
 	public ResponseEntity<Object> create(@RequestBody @Valid Alimento alimento) {
 		log.info("Cadastrando Alimento" + alimento);
@@ -82,9 +129,17 @@ public class AlimentoController {
 	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		log.info("Deletando Alimento");
 
-		alimentoRepository.delete(findByAlimento(id));
+		Alimento alimento = findByAlimento(id);
+		List<Doacao> doacoes = doacaoRepository.findByAlimento(alimento);
+
+		if (!doacoes.isEmpty()) {
+			doacaoRepository.deleteAll(doacoes);
+		}
+
+		alimentoRepository.delete(alimento);
 		return ResponseEntity.noContent().build();
 	}
+
 
 	@PutMapping("{id}")
 	public EntityModel<Alimento> update(@PathVariable @Valid Long id, @RequestBody Alimento alimento) {

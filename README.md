@@ -7,6 +7,7 @@ O objetivo principal do aplicativo é facilitar e agilizar o processo de doaçã
 
 <br>
 
+
 ## Vídeo pitch
 
 [Vídeo pitch aqui](https://www.youtube.com/watch?v=MboQHZNgQSI)
@@ -31,6 +32,9 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
     - [Apagar](#apagar-alimento)
     - [Atualizar](#atualizar-alimento)
     - [Detalhes](#detalhes-alimento)
+    - [Listar por nome](#listar-nome)
+    - [Listar por tipo](#listar-tipo)
+    - [Listar por usuário](#listar-id-usuário)
 - Endereço
     - [Cadastrar](#cadastrar-endereço)
     - [Listar todos](#listar-endereços)
@@ -41,6 +45,7 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
     - [Cadastrar](#cadastrar-usuário)
     - [Login](#login-usuário)
     - [Listar todos](#listar-usuários)
+    - [Usuário por email](#usuário-email)
     - [Apagar](#apagar-usuário)
     - [Atualizar](#atualizar-usuário)
     - [Detalhes](#detalhes-usuário)
@@ -175,7 +180,7 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
 
 ### Detalhes Alimento
 
-`GET` /solidarityconnect/api/alimento
+`GET` /solidarityconnect/api/alimento/{id}
 
 *Exemplo de resposta*
 
@@ -205,6 +210,169 @@ Quando você for utilizar uma das ferramentas que falamos por último, você tem
 |:------:|---------------------------------------------|
 |200     | Os dados foram retornados com sucesso.      |
 |404     | Não foi encontrado um alimento com esse ID. |
+
+<hr>
+
+### Listar Nome
+
+`GET` /solidarityconnect/api/alimento/nome?nome={nomeDoAlimento}
+
+*Campos da requisição*
+
+| Campo              | Tipo    | Obrigatório | Descrição                           |
+|--------------------|---------|:-----------:|-------------------------------------|
+| nomeAlimento       | texto   | Sim         | O nome do alimento                  |
+
+*Exemplo de resposta*
+
+| Campo              | Tipo    | Descrição                           |
+|--------------------|---------|-------------------------------------|
+| idAlimento         | Long    | O ID do alimento                    |
+| nomeAlimento       | texto   | O nome do alimento                  |
+| validadeAlimento   | data    | A data de validade do alimento      |
+| quantidadeAlimento | inteiro | A quantidade disponível do alimento |
+| tipoAlimento       | texto   | O tipo do alimento                  |
+
+
+```
+[
+    {
+        "idAlimento": 12,
+        "nomeAlimento": "Arroz",
+        "validadeAlimento": "2023-06-05",
+        "quantidadeAlimento": 10,
+        "tipoAlimento": "Perecível"        
+    },
+    {
+        "idAlimento": 13,
+        "nomeAlimento": "Arroz",
+        "validadeAlimento": "2023-06-22",
+        "quantidadeAlimento": 5,
+        "tipoAlimento": "Perecível",
+    },
+    {
+        "idAlimento": 14,
+        "nomeAlimento": "Arroz",
+        "validadeAlimento": "2023-07-03",
+        "quantidadeAlimento": 30,
+        "tipoAlimento": "Perecível"
+    }
+]
+```
+
+*Corpo da resposta*
+
+| Código | Descrição                   |
+|:------:|-----------------------------|
+|200     | Listagem feita com sucesso. |
+|404     | Lista não encontrada.       |
+
+<hr>
+
+### Listar Tipo
+
+`GET` /solidarityconnect/api/alimento/tipo?tipo={tipoDoAlimento}
+
+*Campos da requisição*
+
+| Campo              | Tipo    | Obrigatório | Descrição                           |
+|--------------------|---------|:-----------:|-------------------------------------|
+| tipoAlimento       | texto   | Sim         | O tipo do alimento                  |
+
+*Exemplo de resposta*
+
+| Campo              | Tipo    | Descrição                           |
+|--------------------|---------|-------------------------------------|
+| idAlimento         | Long    | O ID do alimento                    |
+| nomeAlimento       | texto   | O nome do alimento                  |
+| validadeAlimento   | data    | A data de validade do alimento      |
+| quantidadeAlimento | inteiro | A quantidade disponível do alimento |
+| tipoAlimento       | texto   | O tipo do alimento                  |
+
+
+```
+[
+    {
+        "idAlimento": 1,
+        "nomeAlimento": "Maçãs",
+        "validadeAlimento": "2023-06-01",
+        "quantidadeAlimento": 50,
+        "tipoAlimento": "Perecível"
+    },
+    {
+        "idAlimento": 3,
+        "nomeAlimento": "Pão de Forma",
+        "validadeAlimento": "2023-06-15",
+        "quantidadeAlimento": 20,
+        "tipoAlimento": "Perecível"
+    },
+    {
+        "idAlimento": 4,
+        "nomeAlimento": "Iogurte",
+        "validadeAlimento": "2023-06-05",
+        "quantidadeAlimento": 30,
+        "tipoAlimento": "Perecível"
+    }
+]
+```
+
+| Código | Descrição                   |
+|:------:|-----------------------------|
+|200     | Listagem feita com sucesso. |
+|404     | Lista não encontrada.       |
+
+<hr>
+
+### Listar Id Usuário
+
+`GET` /solidarityconnect/api/alimento/idusuario/{id}
+
+*Campos da requisição*
+
+| Campo                 | Tipo    | Obrigatório | Descrição                                   |
+|-----------------------|---------|:-----------:|---------------------------------------------|
+| idUsuario             | Long    | sim         | O ID do usuário ao qual o endereço pertence |
+
+*Exemplo de resposta*
+
+| Campo              | Tipo    | Descrição                           |
+|--------------------|---------|-------------------------------------|
+| idAlimento         | Long    | O ID do alimento                    |
+| nomeAlimento       | texto   | O nome do alimento                  |
+| validadeAlimento   | data    | A data de validade do alimento      |
+| quantidadeAlimento | inteiro | A quantidade disponível do alimento |
+| tipoAlimento       | texto   | O tipo do alimento                  |
+
+
+```
+[
+    {
+        "idAlimento": 9,
+        "nomeAlimento": "Maçã",
+        "validadeAlimento": "2023-06-01",
+        "quantidadeAlimento": 10,
+        "tipoAlimento": "perecível",
+    },
+    {
+        "idAlimento": 10,
+        "nomeAlimento": "Mexirica",
+        "validadeAlimento": "2023-06-01",
+        "quantidadeAlimento": 10,
+        "tipoAlimento": "perecível",
+    },
+    {
+        "idAlimento": 11,
+        "nomeAlimento": "Batata",
+        "validadeAlimento": "2023-06-01",
+        "quantidadeAlimento": 10,
+        "tipoAlimento": "perecível",
+    }
+]
+```
+| Código | Descrição                   |
+|:------:|-----------------------------|
+|200     | Listagem feita com sucesso. |
+|404     | Lista não encontrada.       |
 
 <hr>
 
@@ -517,6 +685,47 @@ Exemplo de requisição:
 |:------:|------------------------------|
 |200     | Listagem feita com sucesso.  |
 |404     | Lista não encontrada.        |
+
+<hr>
+
+### Usuário Email
+
+`GET` /solidarityconnect/api/usuarios/email?email={emailDoUsuario}
+
+*Campos da requisição*
+
+| Campo           | Tipo    | Obrigatório | Descrição             |
+|-----------------|---------|:-----------:|-----------------------|
+| emailUsuario    | texto   | Não         | O email do usuário    |
+
+*Campos da resposta*
+
+| Campo           | Tipo    | Descrição             |
+|-----------------|---------|-----------------------|
+| idUsuario       | Long    | O ID do usuário       |
+| nomeUsuario     | texto   | O nome do usuário     |
+| emailUsuario    | texto   | O email do usuário    |
+| senhaUsuario    | texto   | A senha do usuário    |
+| cnpjUsuario     | texto   | O CNPJ do usuário     |
+| telefoneUsuario | texto   | O telefone do usuário |
+
+```
+{
+    "idUsuario": 1,
+    "nomeUsuario": "Restaurante Sabores Exóticos",
+    "emailUsuario": "contato@saboresexoticos.com",
+    "senhaUsuario": "restaurante123",
+    "cnpjUsuario": "12.345.678/0001-90",
+    "telefoneUsuario": "(12) 3456-7890"
+}
+```
+
+*Corpo da resposta:*
+
+| Código | Descrição                                 |
+|:------:|-------------------------------------------|
+| 200    | Os dados foram retornados com sucesso.    |
+| 404    | Não foi encontrado um usuário com esse ID.|
 
 <hr>
 

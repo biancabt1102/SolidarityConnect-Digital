@@ -1,5 +1,7 @@
 package br.com.solidarityconnect.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.solidarityconnect.models.Credencial;
+import br.com.solidarityconnect.models.Doacao;
 import br.com.solidarityconnect.models.Token;
 import br.com.solidarityconnect.models.Usuario;
+import br.com.solidarityconnect.repository.DoacaoRepository;
 import br.com.solidarityconnect.repository.UsuarioRepository;
 import br.com.solidarityconnect.service.TokenService;
 import jakarta.validation.Valid;
@@ -37,6 +41,9 @@ public class UsuarioController {
 
 	@Autowired
     PasswordEncoder encoder;
+
+	@Autowired
+	DoacaoRepository doacaoRepository;
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
@@ -69,15 +76,23 @@ public class UsuarioController {
 		return usuario.toEntityModel();
 	}
 
+	@GetMapping("/email/{email}")
+	public Usuario findByEmail(@RequestParam String email) {
+    log.info("Buscar Usuários por e-mail: " + email);
+    return usuarioRepository.findByEmail(email);
+	}
+
 	@PostMapping("/cadastro")
 	public ResponseEntity<Object> create(@RequestBody @Valid Usuario usuario) {
 		log.info("Cadastrando Usuário" + usuario);
 		usuario.setSenhaUsuario(encoder.encode(usuario.getSenhaUsuario()));
 		usuarioRepository.save(usuario);
+
 		return ResponseEntity
             .created(usuario.toEntityModel().getRequiredLink("self").toUri())
             .body(usuario.toEntityModel());
 	}
+
 
 	@PostMapping("/login")
     public ResponseEntity<Token> login(@RequestBody Credencial credencial){
@@ -90,9 +105,17 @@ public class UsuarioController {
 	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		log.info("Deletando Usuário");
 
-		usuarioRepository.delete(findByUsuario(id));
+		Usuario usuario = findByUsuario(id);
+		List<Doacao> doacoes = doacaoRepository.findByUsuario(usuario);
+
+		if (!doacoes.isEmpty()) {
+			doacaoRepository.deleteAll(doacoes);
+		}
+
+		usuarioRepository.delete(usuario);
 		return ResponseEntity.noContent().build();
 	}
+
 
 	@PutMapping("{id}")
 	public EntityModel<Usuario> update(@PathVariable @Valid Long id, @RequestBody Usuario usuario) {
